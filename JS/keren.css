@@ -1,0 +1,23 @@
+button {
+    background-color: #4CAF50; /* Hijau */
+    color: white;              /* Teks putih */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+button:hover {
+    background-color: #1f4921; /* Warna saat hover */
+    color: #1f4921;
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 10px;
+}

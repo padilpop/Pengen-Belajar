@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Belajar JavaScript</title>
+</head>
+<body>
+    <h1 id="judul">Halo, Dunia!</h1>
+
+    <button onclick="gantiTeks()">Klik Saya</button><br>
+    <br>
+    <button onclick="nama()">Klik Saya Juga</button><br>
+    <br>
+    <button onclick="ififan()">Tombol nilai</button><br>
+    <br>
+    <button onclick="masukan()">Klik Saya Jugaaa</button><br>
+    <br>
+    <button onclick="useran()">Klik Saya Jugaaaa</button><br>
+    <br>
+    
+    <script>
+function gantiTeks() {
+    document.getElementById("judul").innerHTML = "Teks Berubah!";
+}
+
+function nama() {
+    let nama = "Fahdil";
+    console.log(nama);
+
+    nama = "Raihandi"; // Mengubah nilai variabel
+    console.log(nama);
+}
+
+function ififan () {
+let nilai = prompt("Masukkan nilai anda : ");
+
+if (nilai > 100) {
+    console.log("Input nilai yg bener lol gamungkin", nilai);
+} else if (nilai >= 70) {
+    console.log("Nilai anda " + nilai + " dan anda Lulus :)");
+} else if (nilai >= 1) {
+    console.log("Nilai anda " + nilai + " dan anda TIDAK LULUS !!!!");  
+} else if (nilai == 0) {
+    console.log("Mampus 0");
+} else {
+    console.log(nilai);
+}
+}
+
+function masukan () {
+    let inputan = prompt("Masukkan nama anda : ");
+console.log("Haloooo " + inputan + " apa kabar ?");
+}
+
+function useran () {
+    let user_input = prompt("Masukkan nama Anda: ");
+console.log("Nama Anda adalah :", user_input);
+}
+    </script>
+</body>
+</html>
