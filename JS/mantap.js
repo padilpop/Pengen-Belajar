@@ -29,7 +29,7 @@ function tombol4(){
     else if(umurPengunjung <= 70) panggilan = "Kakek"
     else if(umurPengunjung > 70) panggilan = "Sepuh"
 
-    document.write("<p>Haloo "+ panggilan +" Semangat Belajar Lah Biar Jago LU MAIN GAME TERUS KOCAK KAPAN JAGONYA, LU MASUK JURUSAN SI GK BISA NGODING MALU KOCAK GILA LU BELAJAR LAH!!!!!!!!!!!!!!</p>")
+    document.write("<p>Haloo "+ panggilan +" Semangat Belajar Lah Biar Jago!!!!!!!!!!!!!!</p>")
 
 }
 
@@ -68,10 +68,17 @@ function tombol6(){
     var username = prompt("Username:");
     var password = prompt("Password:");
     
-    if(username == "Rehan" && password == "73821921"){
+    if(username == "Rehan" && password == "777"){
         document.write("<h2>Selamat datang pak bos!</h2>");
-    } else {
+    } 
+    else if (username !== "Rehan" && password == "777"){
+        document.write("<p>Username salah, coba lagi!</p>");
+    }
+    else if (username == "Rehan" && password !== "777"){
         document.write("<p>Password salah, coba lagi!</p>");
+    }
+    else if (username !== "Rehan" && password !== "777"){
+        document.write("<p>Password dan Username salah, coba lagi!</p>");
     }
 }
 
