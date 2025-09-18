@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Dengan Operator Logika</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Form Login</h2>
+        <label for="username">Username :</label>
+        <input type="text" id="username" placeholder="Masukkan username">
+        <label for="password">Password :</label>
+        <input type="text" id="password" placeholder="Masukkan password">
+
+        <label for="role">Pilih role</label>
+        <select id="role">
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+            <option value="guest">Guest</option>
+        </select>
+        <a href="onanapartisi.png"></a>
+        <button onclick="login()">Login</button>        
+        <div class="result" id="hasil">Status login akan tampil di sini</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
