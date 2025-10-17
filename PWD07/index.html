@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #a10000;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffffff;
+        }
+
+        #menu-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2a;
+        }
+
+        .menu-item:hover {
+            transition: 0.5s;
+            transform: scale(1.05);
+            background: #ffd000;
+        }
+
+        /* .menu-item:hover, .menu-title:hover, .menu-price:hover {
+            transition: .5s;
+            background: #ffd000;
+            transform: scale(1.05);
+            color: white;
+        } */
+        
+        .menu-title {
+            margin: 10px 0;
+            color: #222;
+            font-size: 23px;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .menu-price {
+            font-weight: bold;
+            color: #8f0000;
+        }
+
+        #detail {
+            margin-top: 30px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+            display: none;
+        }
+        #detail:hover {
+            background: #e2e2e2;
+        }
+</style>
+<body>
+    <h1>Daftar Menu</h1>
+    <div id="menu-container"></div>
+    
+    <div id="detail">
+        <h2 id="detail-title"></h2>
+        <p id="detail-desc"></p>
+        <p><strong id="detail-price"></strong></p>
+    </div>
+
+<script>
+
+
+const menuData = [  
+    {
+        title: "Nasi Goreng",
+        desc: "Nasi goreng khas Indonesia dengan telur dan ayam.",
+        price: "Rp18.000"
+    },
+    {
+        title: "Mie Ayam",
+        desc: "Mie ayam dengan pangsit dan sayuran segar.",
+        price: "Rp15.000"
+    },
+    {
+        title: "Sate Ayam",
+        desc: "Sate ayam dengan bumbu kacang dan lontong.",
+        price: "Rp20.000"
+    },
+    {
+        title: "Bakso",
+        desc: "Bakso sapi dengan mie dan tahu.",
+        price: "Rp17.000"
+    },
+    {
+        title: "Ayam Geprek",
+        desc: "Ayam geprek pedas dengan nasi putih.",
+        price: "Rp19.000"
+    },
+    {
+        title: "Gado-Gado",
+        desc: "Sayuran rebus dengan bumbu kacang.",
+        price: "Rp16.000"
+    },
+    {
+        title: "Soto Ayam",
+        desc: "Soto ayam hangat dengan bihun dan telur.",
+        price: "Rp18.000"
+    },
+    {
+        title: "Rendang",
+        desc: "Rendang daging sapi khas Padang.",
+        price: "Rp25.000"
+    },
+    {
+        title: "Pecel Lele",
+        desc: "Lele goreng dengan sambal dan lalapan.",
+        price: "Rp15.000"
+    },
+    {
+        title: "Es Teh Manis",
+        desc: "Minuman es teh manis segar.",
+        price: "Rp6.000"
+    },
+    {
+        title: "Jus Alpukat",
+        desc: "Jus alpukat dengan susu coklat.",
+        price: "Rp10.000"
+    }
+];
+
+const menuContainer = document.getElementById('menu-container');
+const detailBox = document.getElementById('detail');
+const detailTitle = document.getElementById('detail-title');
+const detailDesc = document.getElementById('detail-desc');
+const detailPrice = document.getElementById('detail-price');
+
+menuContainer.innerHTML = '';
+menuData.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'menu-item';
+    div.innerHTML = `
+        <div class="menu-title">${item.title}</div>
+        <div class="menu-price">${item.price}</div>
+    `;
+    div.onclick = () => {
+        detailBox.style.display = 'block';
+        detailTitle.textContent = item.title;
+        detailDesc.textContent = item.desc;
+        detailPrice.textContent = item.price;
+    };
+    menuContainer.appendChild(div);
+});
+</script>   
+
+</body>
+</html>

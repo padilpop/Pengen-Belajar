@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Website Menu Restoran</title>
+</head>
+<body style="margin: 0; font-family: Arial, sans-serif; background: #f9f9f9; 
+            color: #333; display: flex; flex-direction: column; min-height: 100vh;">
+
+  <header style="background: #007BFF; color: white; padding: 15px 20px; text-align: center;">
+    <h1 style="margin: 0;">Restoran Lezat</h1>
+    <p>Selamat datang di website resmi restoran kami</p>
+  </header>
+
+  <div class="container" style="display: flex; flex: 1;">
+    
+    <nav style="width: 220px; background: #f0f0f0; padding: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.1);">
+      <ul style="list-style: none; padding: 0;">
+        <li style="margin-bottom: 15px;"><a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Beranda</a></li>
+        <li style="margin-bottom: 15px;"><a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Daftar Menu</a></li>
+        <li style="margin-bottom: 15px;"><a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Promo</a></li>
+        <li style="margin-bottom: 15px;"><a href="#" style="text-decoration: none; color: #333; font-weight: bold;">Kontak</a></li>
+      </ul>
+
+      <div class="form-box" style="margin-top: 20px; padding: 10px; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+        <h3 style="margin-top: 0; font-size: 16px; text-align: center;">Tambah Menu</h3>
+        <label for="title" style="font-size: 14px; display: block; margin-top: 10px;">Nama Menu:</label>
+        <input type="text" id="title" placeholder="contoh: Bakso" style="box-sizing: border-box; width: 100%; padding: 6px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;">
+        
+        <label for="desc" style="font-size: 14px; display: block; margin-top: 10px;">Deskripsi:</label>
+        <textarea id="desc" rows="2" placeholder="contoh: Bakso kuah segar" style="box-sizing: border-box; width: 100%; padding: 6px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;"></textarea>
+        
+        <label for="price" style="font-size: 14px; display: block; margin-top: 10px;">Harga:</label>
+        <input type="text" id="price" placeholder="contoh: Rp 18.000" style="box-sizing: border-box; width: 100%; padding: 6px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; font-size: 14px;">
+        
+        <button id="addMenu" style="margin-top: 10px; width: 100%; padding: 8px; background: #007BFF; color: white; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">Tambah</button>
+      </div>
+    </nav>
+
+    <main style="flex: 1; padding: 20px;">
+      <h2 style="margin-top: 0;">Daftar Menu</h2>
+      <div id="menu-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;"></div>
+      <div id="detail" style="margin-top: 30px; padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); display: none;">
+        <h2 id="detail-title"></h2>
+        <p id="detail-desc"></p>
+        <p><strong id="detail-price"></strong></p>
+      </div>
+    </main>
+  </div>
+
+  <footer style="background: #333; color: white; text-align: center; padding: 10px;">
+    <p>&copy; 2025 Restoran Lezat | All Rights Reserved</p>
+  </footer>
+
+  <script src="abc.js"></script>
+
+</body>
+</html>

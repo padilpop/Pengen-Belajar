@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistem Informasi Akademik</title>
+  <style>
+    /* Gaya Dasar & Layout */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f7f6;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex: 1;
+    }
+
+    /* Header */
+    header {
+      background: #005A9C; /* Warna biru akademik */
+      color: white;
+      padding: 15px 30px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    /* Sidebar Navigasi */
+    nav {
+      width: 240px;
+      background: #ffffff;
+      padding: 20px;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav h2 {
+      font-size: 18px;
+      color: #005A9C;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+      margin: 0 0 20px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      flex-grow: 1;
+    }
+
+    nav ul li a {
+      display: block;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    nav ul li a:hover {
+      background: #eef5ff;
+      color: #005A9C;
+    }
+    
+    nav ul li a.nav-active {
+      background: #005A9C;
+      color: white;
+    }
+
+    /* Form di Sidebar */
+    .form-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .form-box h3 {
+      margin-top: 0;
+      font-size: 16px;
+      text-align: center;
+      color: #333;
+    }
+
+    .form-box label {
+      font-size: 14px;
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .form-box input,
+    .form-box textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .form-box button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background: #28a745; /* Warna hijau untuk aksi tambah */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form-box button:hover {
+      background: #218838;
+    }
+    
+    /* Konten Utama */
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    main h2 {
+      margin-top: 0;
+      font-size: 28px;
+      color: #005A9C;
+    }
+    
+    .content-section {
+        display: none; /* Semua section disembunyikan secara default */
+    }
+
+    /* Gaya untuk Dashboard */
+    .summary-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        text-align: center;
+    }
+
+    .card .value {
+        font-size: 36px;
+        font-weight: bold;
+        color: #005A9C;
+        margin: 10px 0;
+    }
+    
+    .card .label {
+        font-size: 16px;
+        color: #666;
+    }
+
+    /* Gaya untuk Daftar Mata Kuliah */
+    #course-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .course-item {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      cursor: pointer;
+      border-left: 5px solid #007BFF;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .course-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    .course-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0 0 10px 0;
+      color: #333;
+    }
+
+    .course-info {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Detail Mata Kuliah */
+    #detail-view {
+      margin-top: 30px;
+      padding: 25px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: none;
+    }
+    #detail-title { color: #005A9C; margin-bottom: 15px; }
+    #detail-info { font-weight: bold; }
+    #detail-desc { color: #444; }
+
+    /* Gaya untuk Tabel */
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .custom-table th, .custom-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    .custom-table th {
+        background-color: #005A9C;
+        color: white;
+    }
+    .custom-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .custom-table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Gaya untuk Section Identitas */
+    #identitas-container {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        max-width: 600px;
+    }
+    .profile-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+    .profile-label {
+        font-weight: bold;
+        color: #555;
+        width: 150px;
+        flex-shrink: 0;
+    }
+    .profile-value {
+        color: #333;
+    }
+    .profile-input {
+        flex-grow: 1;
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+    .action-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin-top: 20px;
+    }
+    .edit-button { background-color: #007BFF; }
+    .edit-button:hover { background-color: #0056b3; }
+    .save-button { background-color: #28a745; }
+    .save-button:hover { background-color: #218838; }
+    
+    /* Gaya untuk Riwayat Semester (Akordion) */
+    .semester-accordion .semester-header {
+        background-color: #005A9C;
+        color: white;
+        cursor: pointer;
+        padding: 15px;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 8px;
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .semester-accordion .semester-header:hover {
+        background-color: #004a80;
+    }
+    .semester-accordion .semester-content {
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+        border: 1px solid #ddd;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+    }
+    .semester-summary {
+        font-weight: bold;
+        margin-top: 15px;
+        text-align: right;
+    }
+
+    /* Footer */
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  
+  <header>
+    <h1>Sistem Informasi Akademik</h1>
+    <p>Universitas Coding Indonesia</p>
+  </header>
+
+  <div class="container">
+    <nav>
+        <h2>Menu Navigasi</h2>
+        <ul>
+            <li><a href="#" id="nav-dashboard" class="nav-active">Dashboard</a></li>
+            <li><a href="#" id="nav-identitas">Identitas</a></li>
+            <li><a href="#" id="nav-semester">Riwayat Semester</a></li>
+            <li><a href="#" id="nav-matakuliah">Mata Kuliah</a></li>
+            <li><a href="#" id="nav-jadwal">Jadwal</a></li>  
+        </ul>
+
+        <div class="form-box" id="add-course-form" style="display: none;">
+            <h3>Tambah Mata Kuliah</h3>
+            <label for="kode_mk">Kode MK:</label>
+            <input type="text" id="kode_mk" placeholder="cth: IF201">
+            <label for="nama_mk">Nama Mata Kuliah:</label>
+            <input type="text" id="nama_mk" placeholder="cth: Algoritma">
+            <label for="sks_mk">Jumlah SKS:</label>
+            <input type="number" id="sks_mk" placeholder="cth: 3">
+            <label for="deskripsi_mk">Deskripsi:</label>
+            <textarea id="deskripsi_mk" rows="3" placeholder="Deskripsi singkat..."></textarea>
+            <button id="addCourseBtn">Tambah</button>
+        </div>
+    </nav>
+
+    <main>
+        <div id="dashboard-view" class="content-section">
+            <h2>Dashboard</h2>
+            <p>Selamat datang, User! Berikut adalah ringkasan akademik Anda.</p>
+            <div class="summary-cards">
+                <div class="card"><div class="label">Total SKS Diambil</div><div class="value" id="total-sks">18</div></div>
+                <div class="card"><div class="label">Jumlah Mata Kuliah</div><div class="value" id="total-courses">6</div></div>
+                <div class="card"><div class="label">IPK Semester</div><div class="value">3.75</div></div>
+            </div>
+        </div>
+        
+        <div id="identitas-view" class="content-section">
+            <h2>Identitas Mahasiswa</h2>
+            <div id="identitas-container"></div>
+            <button id="editIdentitasBtn" class="action-button edit-button" data-mode="view">Ubah Data</button>
+        </div>
+
+        <div id="semester-view" class="content-section">
+            <h2>Riwayat Studi per Semester</h2>
+            <div id="semester-accordion-container" class="semester-accordion">
+                </div>
+        </div>
+
+        <div id="matakuliah-view" class="content-section">
+            <h2>Daftar Mata Kuliah</h2>
+            <div id="course-container"></div>
+            <div id="detail-view">
+                <h3 id="detail-title"></h3>
+                <p id="detail-info"></p>
+                <p id="detail-desc"></p>
+            </div>
+        </div>
+
+        <div id="jadwal-view" class="content-section">
+            <h2>Jadwal Kuliah - Semester Ganjil 2025/2026</h2>
+            <table class="custom-table">
+                <thead><tr><th>Hari</th><th>Waktu</th><th>Mata Kuliah</th><th>Ruang</th><th>Dosen</th></tr></thead>
+                <tbody>
+                    <tr><td>Senin</td><td>08:00 - 10:30</td><td>Rekayasa Perangkat Lunak</td><td>Ruang Teori 101</td><td>Dr. Indah Lestari, M.Kom.</td></tr>
+                   <tr><td>Selasa</td><td>13:00 - 15:30</td><td>Manajemen Proyek SI</td><td>Aula Gedung C</td><td>Bapak Eko Prasetyo, S.E., M.M.</td></tr>
+                    <tr><td>Rabu</td><td>09:00 - 11:30</td><td>Pemrograman Web Dasar</td><td>Lab Komputer 2</td><td>Ibu Siti Aminah, M.T.</td></tr>
+                    <tr><td>Kamis</td><td>10:00 - 12:30</td><td>Basis Data</td><td>Lab Komputer 1</td><td>Prof. Dr. Rinaldi Akbar</td></tr>
+                    <tr><td>Jumat</td><td>14:00 - 15:40</td><td>Praktikum Pemrograman Web Dasar</td><td>Lab Komputer 2</td><td>Asisten Dosen</td></tr>
+            </main>
+        </div>
+
+<footer><p>&copy; 2025 Sistem Informasi Akademik | Universitas Coding Indonesia</p></footer>
+
+  <script>
+    // --- DATA ---
+    let identitasMahasiswa = {
+        nama: "Budi Setiawan", nim: "123456789", prodi: "Teknik Informatika", angkatan: "2022", email: "budi.setiawan@email.com"
+    };
+    
+    // Data Riwayat Studi
+    const riwayatStudi = {
+        "Semester 1": [
+            { kode: "IKSI-110", nama: "Aljabar Linear", sks: 3, nilai: "A" },
+            { kode: "IKSI-140", nama: "Pemrograman Komputer", sks: 4, nilai: "A" },
+            { kode: "IKSI-160", nama: "Manajemen dan Organisasi", sks: 3, nilai: "B" },
+            { kode: "IKSI-161", nama: "Manajemen Proses Bisnis", sks: 4, nilai: "A" },
+            { kode: "IKSI-170", nama: "Pengantar Teknologi dan Sistem Informasi", sks: 4, nilai: "B" },
+            { kode: "MKWU4X", nama: "Bahasa Indonesia", sks: 3, nilai: "A" }
+        ],
+        "Semester 2": [
+            { kode: "IKSI-211", nama: "Statistika dan Probabilitas", sks: 3, nilai: "A" },
+            { kode: "IKSI-242", nama: "Algoritma dan Struktur Data", sks: 3, nilai: "A-" },
+            { kode: "IKSI-243", nama: "Praktikum Algoritma dan Struktur Data", sks: 2, nilai: "A" },
+            { kode: "IKSI-250", nama: "Desain dan Manajemen Jaringan", sks: 3, nilai: "B+" },
+            { kode: "IKSI-262", nama: "Manajemen Hubungan Pelanggan", sks: 3, nilai: "A" },
+            { kode: "IKSI-280", nama: "Perancangan UI/UX", sks: 4, nilai: "A" }
+        ],
+        "Semester 3": [
+            { kode: "MKWK3", nama: "Kewarganegaraan", sks: 2, nilai: "" },
+            { kode: "SI-3014", nama: "Pemrograman Web Dasar", sks: 3, nilai: "" },
+            { kode: "SI-3015", nama: "Praktikum Pemrograman Web Dasar", sks: 2, nilai: "" },
+            { kode: "SI-3016", nama: "Manajemen Rantai Pasok", sks: 3, nilai: "" },
+            { kode: "SI-3017", nama: "Manajemen Proyek SI", sks: 3, nilai: "" },
+            { kode: "SI-3018", nama: "Rekayasa Perangkat Lunak", sks: 3, nilai: "" },
+            { kode: "SI-3019", nama: "Basis Data", sks: 3, nilai: "" }
+        ]
+    };
+    
+    const initialCourses = [
+    { kode: "MKWK3", nama: "Kewarganegaraan", sks: 2, deskripsi: "Pembahasan mengenai identitas nasional, hak dan kewajiban warga negara, serta sistem ketatanegaraan Indonesia." },
+    { kode: "SI-3014", nama: "Pemrograman Web Dasar", sks: 3, deskripsi: "Pengenalan fundamental pengembangan web, meliputi HTML untuk struktur, CSS untuk styling, dan JavaScript untuk interaktivitas dasar." },
+    { kode: "SI-3015", nama: "Praktikum Pemrograman Web Dasar", sks: 2, deskripsi: "Sesi praktik untuk mengimplementasikan konsep HTML, CSS, dan JavaScript dalam membangun proyek-proyek web sederhana." },
+    { kode: "SI-3016", nama: "Manajemen Rantai Pasok", sks: 3, deskripsi: "Studi tentang pengelolaan aliran barang, data, dan keuangan dari pemasok hingga ke konsumen akhir secara efisien." },
+    { kode: "SI-3017", nama: "Manajemen Proyek SI", sks: 3, deskripsi: "Mempelajari metodologi dalam merencanakan, mengeksekusi, dan mengontrol proyek sistem informasi agar selesai tepat waktu dan anggaran." },
+    { kode: "SI-3018", nama: "Rekayasa Perangkat Lunak", sks: 3, deskripsi: "Penerapan prinsip-prinsip rekayasa untuk desain, pengembangan, pengujian, dan pemeliharaan perangkat lunak secara sistematis." },
+    { kode: "SI-3019", nama: "Basis Data", sks: 3, deskripsi: "Pengenalan konsep sistem basis data, perancangan model data relasional, dan penggunaan Structured Query Language (SQL)." }
+    ];
+    let courses = [...initialCourses];
+
+    // --- ELEMEN DOM ---
+    const courseContainer = document.getElementById("course-container");
+    const detailView = document.getElementById("detail-view");
+    const detailTitle = document.getElementById("detail-title");
+    const detailInfo = document.getElementById("detail-info");
+    const detailDesc = document.getElementById("detail-desc");
+    const addCourseForm = document.getElementById('add-course-form');
+    const identitasContainer = document.getElementById('identitas-container');
+    const editIdentitasBtn = document.getElementById('editIdentitasBtn');
+    const semesterContainer = document.getElementById('semester-accordion-container');
+
+    // --- FUNGSI RENDER ---
+    function renderCourse(course) {
+      const item = document.createElement("div");
+      item.className = "course-item";
+      item.innerHTML = `<div class="course-title">${course.nama}</div><div class="course-info">Kode: ${course.kode} | SKS: ${course.sks}</div>`;
+      item.addEventListener("click", () => {
+        detailTitle.textContent = course.nama;
+        detailInfo.textContent = `Kode: ${course.kode} | SKS: ${course.sks}`;
+        detailDesc.textContent = course.deskripsi;
+        detailView.style.display = "block";
+        detailView.scrollIntoView({ behavior: "smooth" });
+      });
+      courseContainer.appendChild(item);
+    }
+    
+    function renderAllCourses() {
+        courseContainer.innerHTML = '';
+        courses.forEach(renderCourse);
+        updateDashboard();
+    }
+
+    function renderIdentitasView() {
+        identitasContainer.innerHTML = `
+            <div class="profile-field"><span class="profile-label">Nama:</span><span class="profile-value">${identitasMahasiswa.nama}</span></div>
+            <div class="profile-field"><span class="profile-label">NIM:</span><span class="profile-value">${identitasMahasiswa.nim}</span></div>
+            <div class="profile-field"><span class="profile-label">Prodi:</span><span class="profile-value">${identitasMahasiswa.prodi}</span></div>
+            <div class="profile-field"><span class="profile-label">Angkatan:</span><span class="profile-value">${identitasMahasiswa.angkatan}</span></div>
+            <div class="profile-field"><span class="profile-label">Email:</span><span class="profile-value">${identitasMahasiswa.email}</span></div>`;
+    }
+
+    function renderIdentitasEdit() {
+        identitasContainer.innerHTML = `
+            <div class="profile-field"><label class="profile-label">Nama:</label><input type="text" id="edit-nama" class="profile-input" value="${identitasMahasiswa.nama}"></div>
+            <div class="profile-field"><label class="profile-label">NIM:</label><input type="text" id="edit-nim" class="profile-input" value="${identitasMahasiswa.nim}"></div>
+            <div class="profile-field"><label class="profile-label">Prodi:</label><input type="text" id="edit-prodi" class="profile-input" value="${identitasMahasiswa.prodi}"></div>
+            <div class="profile-field"><label class="profile-label">Angkatan:</label><input type="text" id="edit-angkatan" class="profile-input" value="${identitasMahasiswa.angkatan}"></div>
+            <div class="profile-field"><label class="profile-label">Email:</label><input type="email" id="edit-email" class="profile-input" value="${identitasMahasiswa.email}"></div>`;
+    }
+    
+    // Fungsi untuk merender Riwayat Semester
+    function renderRiwayatStudi() {
+        semesterContainer.innerHTML = ''; // Kosongkan dulu
+        const konversiNilai = { "A": 4.0, "A-": 3.75, "B+": 3.5, "B": 3.0, "B-": 2.75, "C+": 2.5, "C": 2.0 };
+        
+        for (const semester in riwayatStudi) {
+            const matkul = riwayatStudi[semester];
+            let totalSks = 0;
+            let totalBobot = 0;
+
+            let tableRows = '';
+            matkul.forEach(mk => {
+                const bobot = konversiNilai[mk.nilai] || 0;
+                totalSks += mk.sks;
+                totalBobot += mk.sks * bobot;
+                tableRows += `<tr><td>${mk.kode}</td><td>${mk.nama}</td><td>${mk.sks}</td><td>${mk.nilai}</td></tr>`;
+            });
+            const ipSemester = totalSks > 0 ? (totalBobot / totalSks).toFixed(2) : "0.00";
+
+            const semesterElement = document.createElement('div');
+            semesterElement.innerHTML = `
+                <button class="semester-header">${semester} <span>&#9660;</span></button>
+                <div class="semester-content">
+                    <table class="custom-table">
+                        <thead><tr><th>Kode</th><th>Mata Kuliah</th><th>SKS</th><th>Nilai</th></tr></thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                    <div class="semester-summary">
+                        Total SKS: ${totalSks} | IP Semester: ${ipSemester}
+                    </div>
+                </div>`;
+            semesterContainer.appendChild(semesterElement);
+        }
+    }
+
+    function updateDashboard() {
+        const totalSks = courses.reduce((sum, course) => sum + (course.sks || 0), 0);
+        document.getElementById('total-sks').textContent = totalSks;
+        document.getElementById('total-courses').textContent = courses.length;
+    }
+
+    // --- LOGIKA APLIKASI ---
+
+    // Logika Navigasi
+    const navLinks = document.querySelectorAll('nav ul li a');
+    const contentSections = document.querySelectorAll('.content-section');
+
+    function switchView(viewId) {
+      contentSections.forEach(section => section.style.display = 'none');
+      document.getElementById(viewId).style.display = 'block';
+      addCourseForm.style.display = (viewId === 'matakuliah-view') ? 'block' : 'none';
+      navLinks.forEach(link => {
+          link.classList.remove('nav-active');
+          if(link.id === `nav-${viewId.split('-')[0]}`) link.classList.add('nav-active');
+      });
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => { e.preventDefault(); switchView(link.id.replace('nav-', '') + '-view'); });
+    });
+
+    // Event untuk tombol tambah mata kuliah
+    document.getElementById("addCourseBtn").addEventListener("click", () => {
+      const kode = document.getElementById("kode_mk").value.trim().toUpperCase();
+      const nama = document.getElementById("nama_mk").value.trim();
+      const sks = parseInt(document.getElementById("sks_mk").value.trim());
+      const deskripsi = document.getElementById("deskripsi_mk").value.trim();
+      if (kode && nama && sks > 0 && deskripsi) {
+        courses.push({ kode, nama, sks, deskripsi });
+        renderAllCourses();
+        document.getElementById("kode_mk").value = ""; document.getElementById("nama_mk").value = "";
+        document.getElementById("sks_mk").value = ""; document.getElementById("deskripsi_mk").value = "";
+      } else { alert("Harap isi semua field dengan benar!"); }
+    });
+
+    // Event untuk tombol Ubah/Simpan Data Identitas
+    editIdentitasBtn.addEventListener('click', () => {
+        const isEditMode = editIdentitasBtn.dataset.mode === 'edit';
+        if (isEditMode) {
+            identitasMahasiswa.nama = document.getElementById('edit-nama').value;
+            identitasMahasiswa.nim = document.getElementById('edit-nim').value;
+            identitasMahasiswa.prodi = document.getElementById('edit-prodi').value;
+            identitasMahasiswa.angkatan = document.getElementById('edit-angkatan').value;
+            identitasMahasiswa.email = document.getElementById('edit-email').value;
+            renderIdentitasView();
+            editIdentitasBtn.dataset.mode = 'view';
+            editIdentitasBtn.textContent = 'Ubah Data';
+            editIdentitasBtn.classList.remove('save-button');
+            editIdentitasBtn.classList.add('edit-button');
+        } else {
+            renderIdentitasEdit();
+            editIdentitasBtn.dataset.mode = 'edit';
+            editIdentitasBtn.textContent = 'Simpan Perubahan';
+            editIdentitasBtn.classList.remove('edit-button');
+            editIdentitasBtn.classList.add('save-button');
+        }
+    });
+    
+    // Event listener untuk akordion semester
+    semesterContainer.addEventListener('click', function(e) {
+        if (e.target.classList.contains('semester-header')) {
+            const content = e.target.nextElementSibling;
+            const arrow = e.target.querySelector('span');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                arrow.innerHTML = '&#9660;'; // Panah ke bawah
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                arrow.innerHTML = '&#9650;'; // Panah ke atas
+            }
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderAllCourses();
+        renderIdentitasView();
+        renderRiwayatStudi();
+        switchView('dashboard-view');
+    });
+  </script>
+</body>
+</html>
