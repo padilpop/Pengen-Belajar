@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kegiatan Mahasiswa FMIPA Untan</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- React dan ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Babel untuk JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .hero {
+      background: linear-gradient(to right, #0d6efd, #6f42c1);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s ease;
+    }
+
+    footer {
+      background-color: #212529;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+
+    // ===== Komponen Navbar =====
+    function MyNavbar() {
+      return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+          <div className="container">
+            <a className="navbar-brand fw-bold" href="#">FMIPA Untan</a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item"><a className="nav-link" href="#home">Beranda</a></li>
+                <li className="nav-item"><a className="nav-link" href="#kegiatan">Kegiatan</a></li>
+                <li className="nav-item"><a className="nav-link" href="#galeri">Galeri</a></li>
+                <li className="nav-item"><a className="nav-link" href="#kontak">Kontak</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      );
+    }
+
+    // ===== Komponen Hero Section =====
+    function Hero() {
+      return (
+        <section className="hero" id="home">
+          <div className="container">
+            <h1 className="display-5 fw-bold">Kegiatan Mahasiswa Fakultas MIPA</h1>
+            <p className="lead mt-3">Temukan berbagai kegiatan akademik dan non-akademik yang inspiratif di FMIPA Universitas Tanjungpura</p>
+            <a href="#kegiatan" className="btn btn-light btn-lg mt-3">Lihat Kegiatan</a>
+          </div>
+        </section>
+      );
+    }
+
+    // ===== Komponen KegiatanCard =====
+    function KegiatanCard({ judul, deskripsi, tanggal, gambar }) {
+      return (
+        <div className="col-md-4 mb-4">
+          <div className="card h-100 shadow-sm">
+            <img src={gambar} className="card-img-top" alt={judul} />
+            <div className="card-body">
+              <h5 className="card-title">{judul}</h5>
+              <p className="card-text text-muted">{tanggal}</p>
+              <p className="card-text">{deskripsi}</p>
+              <button className="btn btn-primary btn-sm">Selengkapnya</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ===== Komponen Galeri =====
+    function Galeri() {
+      const fotoList = [
+        "https://source.unsplash.com/300x200/?science",
+        "https://source.unsplash.com/300x200/?university",
+        "https://source.unsplash.com/300x200/?student",
+        "https://source.unsplash.com/300x200/?technology",
+        "https://source.unsplash.com/300x200/?classroom",
+        "https://source.unsplash.com/300x200/?research"
+      ];
+      return (
+        <section className="container my-5" id="galeri">
+          <h2 className="text-center text-primary mb-4">Galeri Kegiatan</h2>
+          <div className="row">
+            {fotoList.map((url, i) => (
+              <div className="col-md-4 mb-3" key={i}>
+                <img src={url} alt={`Foto ${i+1}`} className="img-fluid rounded shadow-sm" />
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    }
+
+    // ===== Komponen Kontak =====
+    function Kontak() {
+      return (
+        <section className="container my-5" id="kontak">
+          <h2 className="text-center text-primary mb-4">Hubungi Kami</h2>
+          <div className="row justify-content-center">
+            <div className="col-md-6">
+              <form>
+                <div className="mb-3">
+                  <label className="form-label">Nama Lengkap</label>
+                  <input type="text" className="form-control" placeholder="Masukkan nama Anda" />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Email</label>
+                  <input type="email" className="form-control" placeholder="Masukkan email Anda" />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Pesan</label>
+                  <textarea className="form-control" rows="4" placeholder="Tulis pesan di sini"></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary w-100">Kirim Pesan</button>
+              </form>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ===== Komponen Footer =====
+    function Footer() {
+      return (
+        <footer>
+          <p>© {new Date().getFullYear()} Fakultas MIPA Universitas Tanjungpura</p>
+        </footer>
+      );
+    }
+// ===== Komponen Utama App =====
+    function App() {
+      return (
+        <div>
+          <MyNavbar />
+          <Hero />
+
+          <section className="container my-5" id="kegiatan">
+            <h2 className="text-center text-primary mb-4">Daftar Kegiatan Mahasiswa</h2>
+            <div className="row">
+              <KegiatanCard
+                judul="Seminar Riset Mahasiswa"
+                tanggal="12 Oktober 2025"
+                deskripsi="Kegiatan tahunan yang menampilkan hasil penelitian mahasiswa FMIPA dari berbagai program studi."
+                gambar="https://source.unsplash.com/400x250/?seminar"
+              />
+              <KegiatanCard
+                judul="Pelatihan Pengembangan Web"
+                tanggal="3 November 2025"
+                deskripsi="Workshop pemrograman React dan Node.js untuk mahasiswa Sistem Informasi."
+                gambar="https://source.unsplash.com/400x250/?coding"
+              />
+              <KegiatanCard
+                judul="Lomba Inovasi Sains"
+                tanggal="20 November 2025"
+                deskripsi="Kompetisi antar mahasiswa dalam mengembangkan ide sains dan teknologi yang bermanfaat bagi masyarakat."
+                gambar="https://source.unsplash.com/400x250/?innovation"
+              />
+            </div>
+          </section>
+
+          <Galeri />
+          <Kontak />
+          <Footer />
+        </div>
+      );
+    }
+
+    // Render ke root
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
